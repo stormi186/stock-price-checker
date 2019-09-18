@@ -8,15 +8,19 @@
 
 'use strict';
 
+var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var mongooseConfig = require('../config/mongoose_config');
 require('dotenv').config();
 var { API_TOKEN, MONGO_DB } = process.env;
+var { expect } = require('chai');
 var https = require('https');
 var { StockData } = require('../models/StockData');
 var { ComparisonData } = require('../models/ComparisonData');
 
 mongoose.connect(MONGO_DB, mongooseConfig);
+
+const db = mongoose.connection;
 
 module.exports = app => {
   app.get('/api/stock-prices', (req, res, next) => {
